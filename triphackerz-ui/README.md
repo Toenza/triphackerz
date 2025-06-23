@@ -1,6 +1,14 @@
-# Triphackerz
+# TriphackerzUi
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+
+You need to add the app id and api-key in isochrone.service.ts to have it work.
+You can click on the map and see an 1-hour public-transport isochrone from the location clicked.
+
+Uses:
+- momentjs for times/durations
+- leaflet for maps
+- traveltime isochrone api in geojson format
 
 ## Development server
 
