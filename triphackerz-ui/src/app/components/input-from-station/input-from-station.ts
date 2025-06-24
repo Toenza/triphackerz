@@ -24,13 +24,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class InputFromStation implements OnInit {
   private service = inject(StationsAutocompleteService);
-  stationName = new FormControl('');
+  station = new FormControl('');
   possibleStations: Array<Station> = [];
 
   @Output() stationChanged = new EventEmitter<Station>();
 
   ngOnInit() {
-    this.stationName.valueChanges.pipe(
+    this.station.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       filter(value => {
@@ -40,7 +40,10 @@ export class InputFromStation implements OnInit {
         }
         return true;
       }),
-      switchMap((value: string | null) => this.service.getStations(value || ''))
+      switchMap((value: string | null) => {
+        console.log('value', value);
+        return this.service.getStations(value || '')
+      })
     ).subscribe({
       next: (stations: Station[]) => {
         this.possibleStations = stations;
@@ -54,5 +57,9 @@ export class InputFromStation implements OnInit {
 
   onSelectionChanged(selection: Station) {
     this.stationChanged.emit(selection);
+  }
+
+  displayFn(station: Station) {
+    return station?.name;
   }
 }
