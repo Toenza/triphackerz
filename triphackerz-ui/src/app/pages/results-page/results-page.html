@@ -1,23 +1,29 @@
-@if(startLocation && destinations) {
-<app-map [startLocation]="startLocation" [destinations]="destinations"></app-map>
+@if (isLoading()) {
+    <div class="spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+}
+
+@if (startLocation && destinations) {
+    <app-map [startLocation]="startLocation" [destinations]="destinations"></app-map>
 }
 <div class="results">
 
-@for (result of results(); track result.activityRecommendation.activity.name) {
-    <mat-card appearance="outlined">
-        <mat-card-header>
-            <mat-card-title>{{ result.activityRecommendation.activity.name }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <div class="activity-recommendation">
-                <p>
-                    {{ result.activityRecommendation.activity.description }}
-                </p>
-                <div class="image">
-                    <img mat-card-image [src]="result.image.link" [alt]="result.image.title">
+    @for (result of results(); track result.activityRecommendation.activity.name) {
+        <mat-card appearance="outlined">
+            <mat-card-header>
+                <mat-card-title>{{ result.activityRecommendation.activity.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="activity-recommendation">
+                    <p>
+                        {{ result.activityRecommendation.activity.description }}
+                    </p>
+                    <div class="image">
+                        <img mat-card-image [src]="result.image.link" [alt]="result.image.title">
+                    </div>
                 </div>
-            </div>
-        </mat-card-content>
-    </mat-card>
-}
+            </mat-card-content>
+        </mat-card>
+    }
 </div>
