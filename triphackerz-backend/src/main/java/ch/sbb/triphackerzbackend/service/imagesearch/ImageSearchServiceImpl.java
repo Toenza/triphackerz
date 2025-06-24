@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ImageSearchServiceImpl implements ImageSearchService {
 
+    public static final String GOOGLE_BASE_URL = "https://www.googleapis.com";
     private final WebClient webClient;
     @Value("${app.google.search.api-key}")
     private String apiKey;
@@ -20,7 +21,7 @@ public class ImageSearchServiceImpl implements ImageSearchService {
 
 
     public ImageSearchServiceImpl(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://www.googleapis.com").build();
+        this.webClient = webClientBuilder.baseUrl(GOOGLE_BASE_URL).build();
     }
 
 
