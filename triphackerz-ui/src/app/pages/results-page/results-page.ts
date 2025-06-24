@@ -15,13 +15,13 @@ import {Observable} from 'rxjs';
 })
 export class ResultsPage {
   private searchTripService = inject(TripSearchService);
-  test$: Observable<ActivityRecommendationResponseItem[]> | undefined;
 
   constructor(private _activatedRoute: ActivatedRoute, private _router: Router) {
     _activatedRoute.queryParams.subscribe(
       params => {
         console.log('queryParams', params);
-        this.test$ = this.searchTripService.searchTrip(params['lng'], params['lat'], 60, ['mountain biking', 'schwimmen']);
+        this.searchTripService.searchTrip(params['lng'], params['lat'], 60, ['mountain biking', 'schwimmen'])
+          .subscribe(res => this.results.set(res));
       });
   }
 
