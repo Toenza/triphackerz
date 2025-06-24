@@ -1,20 +1,11 @@
 package ch.sbb.triphackerzbackend.service.geo.isochrone;
 
 import lombok.extern.slf4j.Slf4j;
-//import org.geojson.FeatureCollection;
-import org.geojson.FeatureCollection;
-import org.geojson.GeoJsonObject;
-import org.geotools.geojson.geom.GeometryJSON;
-import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.locationtech.jts.geom.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.time.Duration;
 
 @Service

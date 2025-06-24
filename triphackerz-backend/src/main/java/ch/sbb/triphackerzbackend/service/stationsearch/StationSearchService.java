@@ -53,7 +53,6 @@ public class StationSearchService {
         GeometryJSON gjson = new GeometryJSON();
         Reader reader = new StringReader(json);
         MultiPolygon multiPolygon = gjson.readMultiPolygon(reader);
-
         Geometry intersection = multiPolygon.intersection(allPoints);
         List<Coordinate> coordinates = Arrays.stream(intersection.getCoordinates()).toList();
         List<Station> list = coordinates.stream().map(
