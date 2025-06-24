@@ -1,20 +1,34 @@
 package ch.sbb.triphackerzbackend.service.stationsearch;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
-import ch.sbb.triphackerzbackend.service.geo.isochrone.IsochroneService;
-import org.geotools.geojson.geom.GeometryJSON;
-import org.geotools.geometry.jts.JTSFactoryFinder;
-import org.locationtech.jts.geom.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.geotools.geojson.geom.GeometryJSON;
+import org.geotools.geometry.jts.JTSFactoryFinder;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
+import org.locationtech.jts.geom.Point;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import ch.sbb.triphackerzbackend.model.Station;
+import ch.sbb.triphackerzbackend.service.geo.isochrone.IsochroneService;
 
 @Service
 public class StationSearchService {
@@ -43,7 +57,8 @@ public class StationSearchService {
 
     public List<Station> searchStation(String nameQuery) {
         return stations.stream()
-                .filter(station -> station.getName().toLowerCase().contains(nameQuery.toLowerCase()))
+                .filter(station -> station.getName().toLowerCase().startsWith(nameQuery.toLowerCase()))
+                .sorted(Comparator.comparing(Station::getName))
                 .limit(10)
                 .toList();
     }
@@ -142,7 +157,7 @@ public class StationSearchService {
                         avgLongitude
                 ));
             } else {
-                filteredParentStations.add(new Station (
+                filteredParentStations.add(new Station(
                         clusteredStations.getFirst().getId(),
                         stationName,
                         clusteredStations.getFirst().getLatitude(),
