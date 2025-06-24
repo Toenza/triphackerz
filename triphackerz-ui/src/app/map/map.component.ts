@@ -1,10 +1,9 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
+import {LatLng, PolylineOptions} from 'leaflet';
 import {Location} from '../models/location.model';
-import {OjpRoute, OjpService} from '../service/ojp.service';
-import {Observable} from 'rxjs';
+import {OjpService} from '../service/ojp.service';
 import {TraveltimeTripService} from '../service/traveltime-trip.service';
-import {LatLng} from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -74,7 +73,10 @@ export class MapComponent implements OnInit {
           }
           return pairwise;
         });
-        L.polyline(polyline).addTo(this.map);
+        const randomColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+        L.polyline(polyline, {
+          color: randomColor
+        } as PolylineOptions).addTo(this.map);
       });
       // this.ojpService.getPublicTransportRoutes(this.startLocation, destination).subscribe((route: Observable<OjpRoute>) => {
       //   console.log('Route found:', route);

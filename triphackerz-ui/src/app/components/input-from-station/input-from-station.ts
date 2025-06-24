@@ -27,7 +27,7 @@ export class InputFromStation implements OnInit {
   stationName = new FormControl('');
   possibleStations: Array<Station> = [];
 
-  @Output() stationNameChanged = new EventEmitter<string>();
+  @Output() stationChanged = new EventEmitter<Station>();
 
   ngOnInit() {
     this.stationName.valueChanges.pipe(
@@ -52,7 +52,7 @@ export class InputFromStation implements OnInit {
     });
   }
 
-  onSelectionChanged(selection: string) {
-    this.stationNameChanged.emit(selection);
+  onSelectionChanged(selection: Station) {
+    this.stationChanged.emit(selection);
   }
 }

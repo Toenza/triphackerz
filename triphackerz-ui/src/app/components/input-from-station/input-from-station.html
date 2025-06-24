@@ -9,7 +9,7 @@
   >
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event.option.value)">
       @for (station of possibleStations; track station.id) {
-          <mat-option [value]="station.name">{{ station.name }}</mat-option>
+          <mat-option [value]="station">{{ station.name }}</mat-option>
     }
   </mat-autocomplete>
 </mat-form-field>
