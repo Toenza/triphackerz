@@ -36,13 +36,43 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
 
     // Add a marker for the start location
-    const marker = L.marker([this.startLocation.latitude, this.startLocation.longitude]).addTo(this.map);
-    marker.bindPopup('Start Location').openPopup();
+    const startIcon = L.divIcon({
+      className: 'custom-marker',
+      html: '<div style="background-color: red; border-radius: 50%; width: 20px; height: 20px;"></div>',
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    });
+    L.marker([this.startLocation.latitude, this.startLocation.longitude], {icon: startIcon}).addTo(this.map);
 
     // Add markers for destination locations
     this.destinations.forEach(destination => {
-      const destMarker = L.marker([destination.latitude, destination.longitude]).addTo(this.map);
-      destMarker.bindPopup('Destination Location');
+      L.marker([destination.latitude, destination.longitude]).addTo(this.map);
+    });
+  }
+
+  createColoredMarkerIcon(color: string) {
+    // Create an HTML canvas element
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = 25; // Width of the canvas
+    canvas.height = 41; // Height of the canvas
+
+    // Draw the default Leaflet marker shape
+    if (context != null) {
+      context.fillStyle = color; // Set the desired color
+      context.beginPath();
+      context.moveTo(12.5, 0); // Top of the marker
+      context.lineTo(25, 41); // Bottom right
+      context.lineTo(0, 41); // Bottom left
+      context.closePath();
+      context.fill();
+    }
+
+    // Return the created icon
+    return L.icon({
+      iconUrl: canvas.toDataURL(), // Convert canvas to image URL
+      iconSize: [25, 41], // Size of the icon
+      iconAnchor: [12.5, 41] // Anchor point of the icon
     });
   }
 
