@@ -25,10 +25,7 @@ export class App implements OnInit, AfterViewInit {
   private pin = Leaflet.marker({lat: 0, lng: 0});
   private isocrone!: Leaflet.Layer;
 
-  test$: Observable<ActivityRecommendationResponseItem[]> | undefined;
-
   ngOnInit() {
-    this.test$ = this.testService.searchTrip(8.63549115943129, 47.69629751508408, 60, ['mountain biking', 'schwimmen']);
   }
 
   ngAfterViewInit() {

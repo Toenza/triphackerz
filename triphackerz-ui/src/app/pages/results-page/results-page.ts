@@ -3,23 +3,25 @@ import {MapComponent} from "../../map/map.component";
 import {Location} from '../../models/location.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ActivityRecommendationResponseItem, TripSearchService} from '../../service/trip-search.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-results-page',
   imports: [
-    MapComponent
+    MapComponent,
   ],
   templateUrl: './results-page.html',
   styleUrl: './results-page.scss'
 })
 export class ResultsPage {
   private searchTripService = inject(TripSearchService);
+  test$: Observable<ActivityRecommendationResponseItem[]> | undefined;
 
   constructor(private _activatedRoute: ActivatedRoute, private _router: Router) {
     _activatedRoute.queryParams.subscribe(
       params => {
         console.log('queryParams', params);
-        this.searchTripService.searchTrip(params['lng'], params['lat'], 60, ['mountain biking', 'schwimmen']);
+        this.test$ = this.searchTripService.searchTrip(params['lng'], params['lat'], 60, ['mountain biking', 'schwimmen']);
       });
   }
 
