@@ -1,6 +1,6 @@
 import {MatInputModule} from '@angular/material/input';
 import {MatChipsModule} from '@angular/material/chips';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Component} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -21,18 +21,14 @@ import {InputFromStation} from '../../components/input-from-station/input-from-s
 })
 
 export class FilterPage {
-  form: FormGroup;
+  fromInput: string = "";
+  maxTravelTimeInput: string = "";
 
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      from: [''],
-      max_travel_time: [''],
-      activities: [[]],
-    });
+  handleStationNameChange(data: string) {
+    this.fromInput = data;
   }
 
-  // getFormValues & submit
-  getFormValues(){
-
+  handleMaxTimeChange(data: string) {
+    this.maxTravelTimeInput = data;
   }
 }

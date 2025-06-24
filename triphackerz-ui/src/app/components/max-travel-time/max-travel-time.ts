@@ -12,6 +12,10 @@ import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
   styleUrl: './max-travel-time.scss'
 })
 export class MaxTravelTime {
-  @Output() handleMaxTimeChanged = new EventEmitter<string>();
+  @Output() maxTravelTimeChanged = new EventEmitter<any>();
   maxTravelTime: string = "01:00";
+
+  onSelectionChanged(selection) {
+    this.maxTravelTimeChanged.emit(selection.target.value);
+  }
 }
