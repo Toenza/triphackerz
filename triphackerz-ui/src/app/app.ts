@@ -10,11 +10,12 @@ import {MapComponent} from './map/map.component';
 import {Location} from './models/location.model';
 import {MatToolbar} from '@angular/material/toolbar';
 import {RouterLink, RouterOutlet} from '@angular/router';
+import {OjpService} from './service/ojp.service';
 
 @Component({
   selector: 'app-root',
   imports: [AsyncPipe, JsonPipe, MapComponent, MatToolbar, RouterLink, RouterOutlet],
-  providers: [IsochroneService, HttpClient],
+  providers: [IsochroneService, HttpClient, OjpService],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

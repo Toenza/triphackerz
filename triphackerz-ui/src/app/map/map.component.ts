@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {Location} from '../models/location.model';
+import {OjpRoute, OjpService} from '../service/ojp.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -20,7 +22,7 @@ export class MapComponent implements OnInit {
     {latitude: 46.9429048241674, longitude: 7.443830980779374} // default value
   ];
 
-  constructor() {
+  constructor(private ojpService: OjpService) {
   }
 
   ngOnInit() {
@@ -45,34 +47,17 @@ export class MapComponent implements OnInit {
     L.marker([this.startLocation.latitude, this.startLocation.longitude], {icon: startIcon}).addTo(this.map);
 
     // Add markers for destination locations
+    //this.destinations.forEach(destination => {
+    //  L.marker([destination.latitude, destination.longitude]).addTo(this.map);
+    //});
     this.destinations.forEach(destination => {
-      L.marker([destination.latitude, destination.longitude]).addTo(this.map);
-    });
-  }
-
-  createColoredMarkerIcon(color: string) {
-    // Create an HTML canvas element
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    canvas.width = 25; // Width of the canvas
-    canvas.height = 41; // Height of the canvas
-
-    // Draw the default Leaflet marker shape
-    if (context != null) {
-      context.fillStyle = color; // Set the desired color
-      context.beginPath();
-      context.moveTo(12.5, 0); // Top of the marker
-      context.lineTo(25, 41); // Bottom right
-      context.lineTo(0, 41); // Bottom left
-      context.closePath();
-      context.fill();
-    }
-
-    // Return the created icon
-    return L.icon({
-      iconUrl: canvas.toDataURL(), // Convert canvas to image URL
-      iconSize: [25, 41], // Size of the icon
-      iconAnchor: [12.5, 41] // Anchor point of the icon
+      console.log('check following destination: ' + destination.latitude + ' and ' + destination.longitude)
+      this.ojpService.getPublicTransportRoutes(this.startLocation, destination).subscribe((route: Observable<OjpRoute>) => {
+        console.log('Route found:', route);
+        L.marker([destination.latitude, destination.longitude]).addTo(this.map);
+      }, (error: any) => {
+        console.error('Error fetching route:', error);
+      });
     });
   }
 
