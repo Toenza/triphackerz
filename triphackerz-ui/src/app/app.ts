@@ -4,22 +4,28 @@ import {IsochroneService} from './service/isochrone.service';
 import moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import * as Leaflet from 'leaflet';
-import {take} from 'rxjs';
+import {Observable, take} from 'rxjs';
+import {TestService} from './service/test-service';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, AsyncPipe],
   providers: [IsochroneService, HttpClient],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements OnInit, AfterViewInit {
+  private testService = inject(TestService);
   private isochroneService = inject(IsochroneService);
   private map!: Leaflet.Map;
   private pin = Leaflet.marker({lat: 0, lng: 0});
   private isocrone!: Leaflet.Layer;
 
+  test$: Observable<string> | undefined;
+
   ngOnInit() {
+    this.test$ = this.testService.test();
   }
 
   ngAfterViewInit() {
