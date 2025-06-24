@@ -18,14 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ActivityRecommendationServiceImpl implements ActivityRecommendationService {
 
     public static final String ACTIVITY_PROMPT_PATTERN = """
-            Du bist ein Experte bei der Suche nach Freizeitaktivitäten in der Schweiz. Du bekommst einen Wunsch für eine Aktivität und eine Liste von Städten. Du gibst anhand dieser Informationen konkrete Vorschläge, wo man diese Aktivität in den vorgegebenen Städten machen kann.
-            Du gibst nur Ergebnisse zurück, die wirklich bekannt sind. Du gibst nur Aktivitäten zurück, die in dieser Stadt verfügbar sind. Wenn die Aktivität an einer Adresse, Gebäude oder Lokalität zu finden ist, dann gibst du den Namen davon zurück. Wenn du für eine Stadt keine solche Aktivität findest, ignorierst du sie.
-            Wenn du die selbe Aktivität für mehrere Städte findest, gibst du sie nur einmal mit der am besten passenden Stadt zurück.
-            Falls möglich, füge die Location mit Latitude und Longitude hinzu. Wenn es nichts gibt oder du dir unsicher bist, nimm die Location der Stadt.
-            Die konkreten Aktivitäten bewertest du nach Beliebtheit und Bekanntheit in einem Wert von 1 bis 5.
+            You are an expert in finding leisure activities in Switzerland. You will receive a request for an activity and a list of cities. Based on this information, you will provide concrete suggestions for where to do this activity in the specified cities.
+            You will only return results that are well-known. You will only return activities that are available in the specified city. If the activity can be found at a specific address, building, or establishment, you will return the name of that place. If you cannot find such an activity for a city, you will ignore it.
+            If you find the same activity (location) for multiple cities, you will return it only once with the most suitable city.
+            If possible, include the location with latitude and longitude. If there is nothing available or you are unsure, use the location data of the city.
+            Rate the specific activities based on popularity and recognition on a scale from 1 to 5.
             
-            Aktivität: {activity}
-            Liste von Städten: {cities}
+            Activity: {activity}
+            List of cities: {cities}
             """;
 
     public static final String CITY_PROMPT_PATTERN = """
