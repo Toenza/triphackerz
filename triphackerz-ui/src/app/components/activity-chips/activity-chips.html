@@ -1,0 +1,22 @@
+<mat-form-field class="form-input">
+  <mat-label>Prefered activities</mat-label>
+  <mat-chip-grid #chipGrid aria-label="Enter activity">
+    @for (activity of recommendedActivities(); track activity) {
+      <mat-chip-row
+        (removed)="removeActivity(activity)"
+      >
+        {{activity}}
+        <button matChipRemove [attr.aria-label]="'remove ' + activity">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+    }
+    <input
+      placeholder="New activity..."
+      [matChipInputFor]="chipGrid"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="addActivityToInput($event)"
+    />
+  </mat-chip-grid>
+</mat-form-field>

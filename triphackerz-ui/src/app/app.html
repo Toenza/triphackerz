@@ -1,3 +1,13 @@
+<main>
+  <header class="brand-name">
+    <mat-toolbar>
+      <a [routerLink]="['/home']">TripHackerz</a>
+    </mat-toolbar>
+  </header>
+  <section class="content">
+    <router-outlet></router-outlet>
+  </section>
+</main>
 <app-map [startLocation]="startLocation" [destinations]="destinations"></app-map>
 <div>
   {{ test$ | async | json}}

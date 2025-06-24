@@ -8,10 +8,12 @@ import {DummyResponse, TripSearchService} from './service/trip-search.service';
 import {AsyncPipe, JsonPipe} from '@angular/common';
 import {MapComponent} from './map/map.component';
 import {Location} from './models/location.model';
+import {MatToolbar} from '@angular/material/toolbar';
+import {RouterLink, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, JsonPipe, MapComponent],
+  imports: [AsyncPipe, JsonPipe, MapComponent, MatToolbar, RouterLink, RouterOutlet],
   providers: [IsochroneService, HttpClient],
   templateUrl: './app.html',
   styleUrl: './app.scss'

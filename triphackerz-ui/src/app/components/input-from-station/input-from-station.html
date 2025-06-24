@@ -1,0 +1,14 @@
+<mat-form-field class="form-input" appearance="fill">
+  <mat-label>From</mat-label>
+  <input type="text"
+         placeholder="Pick your location"
+         aria-label="Stations"
+         matInput
+         [formControl]="formControl"
+         [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    @for (option of filteredAutocompleteOptions | async; track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>
