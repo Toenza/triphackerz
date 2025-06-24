@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.sbb.triphackerzbackend.model.DummyResponse;
 
 @RestController
-@RequestMapping("/api")
-public class TravelSearchController {
+@RequestMapping("/api/trip")
+public class TripController {
 
     @GetMapping("/search")
     public DummyResponse searchTrip(@RequestParam Double sourceLongitude,

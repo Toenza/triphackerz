@@ -4,7 +4,7 @@ import moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import {Observable, take} from 'rxjs';
-import {DummyResponse, TravelSearchService} from './service/travel-search.service';
+import {DummyResponse, TripSearchService} from './service/trip-search.service';
 import {AsyncPipe, JsonPipe} from '@angular/common';
 
 @Component({
@@ -15,7 +15,7 @@ import {AsyncPipe, JsonPipe} from '@angular/common';
   styleUrl: './app.scss'
 })
 export class App implements OnInit, AfterViewInit {
-  private testService = inject(TravelSearchService);
+  private testService = inject(TripSearchService);
   private isochroneService = inject(IsochroneService);
   private map!: Leaflet.Map;
   private pin = Leaflet.marker({lat: 0, lng: 0});

@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TravelSearchService {
+export class TripSearchService {
   private http = inject(HttpClient);
 
   constructor() { }
@@ -19,7 +19,7 @@ export class TravelSearchService {
           .set('activities', activities.join(',')),
     }
 
-    return this.http.get<DummyResponse>('/api/search', options);
+    return this.http.get<DummyResponse>('/api/trip/search', options);
   }
 }
 
