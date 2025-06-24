@@ -8,38 +8,38 @@ import {finalize} from 'rxjs';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
-    selector: 'app-results-page',
-    imports: [
-        MapComponent,
-        MatCardModule,
+  selector: 'app-results-page',
+  imports: [
+    MapComponent,
+    MatCardModule,
         MatProgressSpinner
     ],
     templateUrl: './results-page.html',
     styleUrl: './results-page.scss'
 })
 export class ResultsPage {
-    private searchTripService = inject(TripSearchService);
+  private searchTripService = inject(TripSearchService);
     results: WritableSignal<ActivityRecommendationResponseItem[]> = signal([]);
     isLoading: WritableSignal<boolean> = signal(false);
 
-    constructor(private _activatedRoute: ActivatedRoute) {
-        this._activatedRoute.queryParams.subscribe(
-            params => {
-                console.log('queryParams', params);
-                this.startLocation = {longitude: parseFloat(params['lng']), latitude: parseFloat(params['lat'])};
+  constructor(private _activatedRoute: ActivatedRoute) {
+    this._activatedRoute.queryParams.subscribe(
+      params => {
+        console.log('queryParams', params);
+        this.startLocation = {longitude: parseFloat(params['lng']), latitude: parseFloat(params['lat'])};
                 this.isLoading.set(true);
-                this.searchTripService.searchTrip(params['lng'], params['lat'], 30, ['in einem see oder fluss schwimmen'])
+                this.searchTripService.searchTrip(params['lng'], params['lat'], 30, params['activities'])
                     .pipe(finalize(() => this.isLoading.set(false)))
-                    .subscribe(res => {
+          .subscribe(res => {
                         this.results.set(res);
                         this.destinations = res.map(
                             result => result.activityRecommendation.activity.location
                         );
                     });
-            });
-    }
+      });
+  }
 
-    startLocation: Location | undefined;
-    destinations: Location[] | undefined;
+  startLocation: Location | undefined;
+  destinations: Location[] | undefined;
 
 }

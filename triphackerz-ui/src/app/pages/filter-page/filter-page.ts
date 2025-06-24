@@ -36,6 +36,10 @@ export class FilterPage {
     this.maxTravelTimeInput = data;
   }
 
+  handleChipsChanged($event: string[]) {
+    this.activities = $event;
+  }
+
   async search() {
     await this.route.navigate(['/results'], {
       queryParams: {

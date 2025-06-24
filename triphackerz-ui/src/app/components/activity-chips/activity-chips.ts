@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, effect, inject, output, signal} from '@angular/core';
 import {MatChipGrid, MatChipInput, MatChipInputEvent, MatChipRemove, MatChipRow} from "@angular/material/chips";
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
@@ -23,6 +23,11 @@ import {MatIcon} from '@angular/material/icon';
 export class ActivityChips {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   readonly recommendedActivities = signal(['Hiking', 'Swimming', 'Sightseeing', 'Wellness']);
+  readonly chipsChanged = output<string[]>();
+  activitiesEffect = effect(() => {
+    const acts = this.recommendedActivities();
+    this.chipsChanged.emit(acts);
+  });
 
   announcer = inject(LiveAnnouncer);
   addOnBlur = true;

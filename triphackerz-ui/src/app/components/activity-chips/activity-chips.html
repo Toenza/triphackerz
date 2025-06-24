@@ -11,12 +11,12 @@
         </button>
       </mat-chip-row>
     }
-    <input
+    <input #activityInput
       placeholder="New activity..."
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       [matChipInputAddOnBlur]="addOnBlur"
-      (matChipInputTokenEnd)="addActivityToInput($event)"
+      (matChipInputTokenEnd)="addActivityToInput($event); activityInput.value=''"
     />
   </mat-chip-grid>
 </mat-form-field>
