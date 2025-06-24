@@ -13,28 +13,42 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 32px;
+  padding: 0;
+}
+
+mat-card-title {
+  padding: 0 0 8px 0;
 }
 
 mat-card {
+  padding:0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+mat-card-content {
+  padding:0;
+  p {
+    padding:0 16px;
+  }
+}
+
+.activity-card {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .activity-recommendation {
-  display: flex;
+  //display: flex;
   flex-direction: row;
   justify-content: space-between;
   overflow: hidden;
 
   .image {
-    max-height: 200px;
-    max-width: 400px;
-    mask-image: linear-gradient(to right, transparent 25%, black 75%);
-    display: flex;
     align-items: center;
 
     img {
-      height: inherit;
+      height: auto;
+      width: 100%;
       background-position: center center;
     }
   }
