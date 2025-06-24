@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
 
 @Component({
@@ -12,5 +12,6 @@ import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
   styleUrl: './max-travel-time.scss'
 })
 export class MaxTravelTime {
-
+  @Output() handleMaxTimeChanged = new EventEmitter<string>();
+  maxTravelTime: string = "01:00";
 }

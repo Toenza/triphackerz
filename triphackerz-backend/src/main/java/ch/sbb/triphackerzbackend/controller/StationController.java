@@ -2,10 +2,7 @@ package ch.sbb.triphackerzbackend.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ch.sbb.triphackerzbackend.model.Station;
 import ch.sbb.triphackerzbackend.service.stationsearch.StationSearchService;
@@ -14,6 +11,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/api/station")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class StationController {
     private final StationSearchService stationSearchService;
 

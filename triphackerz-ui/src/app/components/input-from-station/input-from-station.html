@@ -4,11 +4,12 @@
          placeholder="Pick your location"
          aria-label="Stations"
          matInput
-         [formControl]="formControl"
-         [matAutocomplete]="auto">
-  <mat-autocomplete #auto="matAutocomplete">
-    @for (option of filteredAutocompleteOptions | async; track option) {
-      <mat-option [value]="option">{{ option }}</mat-option>
+         [formControl]="stationName"
+         [matAutocomplete]="auto"
+  >
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectionChanged($event.option.value)">
+      @for (station of possibleStations; track station.id) {
+          <mat-option [value]="station.name">{{ station.name }}</mat-option>
     }
   </mat-autocomplete>
 </mat-form-field>
