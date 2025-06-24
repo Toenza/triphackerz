@@ -2,8 +2,7 @@ package ch.sbb.triphackerzbackend.service.stationsearch;
 
 import java.io.*;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import ch.sbb.triphackerzbackend.service.geo.isochrone.IsochroneService;
 import org.geotools.geojson.geom.GeometryJSON;
@@ -33,7 +32,7 @@ public class StationSearchService {
         GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
         this.points = stations.stream().map(
                 station -> {
-                    Coordinate coordinate = new Coordinate(station.getLatitude(), station.getLongitude());
+                    Coordinate coordinate = new Coordinate(station.getLongitude(), station.getLatitude());
                     Point point = geometryFactory.createPoint(coordinate);
                     point.setUserData(station.getName());
                     return point;
@@ -56,8 +55,14 @@ public class StationSearchService {
         MultiPolygon multiPolygon = gjson.readMultiPolygon(reader);
 
         Geometry intersection = multiPolygon.intersection(allPoints);
+        List<Coordinate> coordinates = Arrays.stream(intersection.getCoordinates()).toList();
+        List<Station> list = coordinates.stream().map(
+                coordinate -> this.stations.stream().filter(
+                        station -> station.getLongitude() == coordinate.x && station.getLatitude() == coordinate.y
+                ).findFirst().orElse(null)
+        ).filter(Objects::nonNull).toList();
 
-        return List.of();
+        return list;
     }
 
     private List<List<String>> readFromCsv() {
