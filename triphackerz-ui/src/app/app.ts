@@ -3,23 +3,18 @@ import {IsochroneService} from './service/isochrone.service';
 import moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import * as Leaflet from 'leaflet';
-import {Observable, take} from 'rxjs';
-import {ActivityRecommendation, ActivityRecommendationResponseItem, TripSearchService} from './service/trip-search.service';
-import {AsyncPipe, JsonPipe} from '@angular/common';
+import {take} from 'rxjs';
 import {MatToolbar} from '@angular/material/toolbar';
 import {RouterLink, RouterOutlet} from '@angular/router';
-import {OjpService} from './service/ojp.service';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, JsonPipe, MatToolbar, RouterLink, RouterOutlet],
-  providers: [IsochroneService, HttpClient, OjpService],
+  imports: [MatToolbar, RouterLink, RouterOutlet],
+  providers: [IsochroneService, HttpClient],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements OnInit, AfterViewInit {
-
-  private testService = inject(TripSearchService);
   private isochroneService = inject(IsochroneService);
   private map!: Leaflet.Map;
   private pin = Leaflet.marker({lat: 0, lng: 0});
