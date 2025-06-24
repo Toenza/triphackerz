@@ -1,11 +1,14 @@
 package ch.sbb.triphackerzbackend.service.stationsearch;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.sbb.triphackerzbackend.service.geo.isochrone.IsochroneService;
+import org.geotools.geojson.geom.GeometryJSON;
+import org.geotools.geometry.jts.JTSFactoryFinder;
+import org.locationtech.jts.geom.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -19,10 +22,24 @@ public class StationSearchService {
     private static final String CSV_FILE = "stops.csv";
 
     private final List<Station> stations;
+    private final List<Point> points;
+    private final MultiPoint allPoints;
+    private final IsochroneService isochroneService;
 
-    public StationSearchService() {
+    public StationSearchService(IsochroneService isochroneService) {
+        this.isochroneService = isochroneService;
         List<List<String>> records = readFromCsv();
-        stations = mapToStations(records);
+        this.stations = this.mapToStations(records);
+        GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
+        this.points = stations.stream().map(
+                station -> {
+                    Coordinate coordinate = new Coordinate(station.getLatitude(), station.getLongitude());
+                    Point point = geometryFactory.createPoint(coordinate);
+                    point.setUserData(station.getName());
+                    return point;
+                }
+        ).toList();
+        this.allPoints = new MultiPoint(this.points.toArray(Point[]::new), geometryFactory);
     }
 
     public List<Station> searchStation(String nameQuery) {
@@ -30,6 +47,17 @@ public class StationSearchService {
                 .filter(station -> station.getName().toLowerCase().contains(nameQuery.toLowerCase()))
                 .limit(10)
                 .toList();
+    }
+
+    public List<Station> getStationsWithinOf(Double lat, Double lng, Duration maxTravelTime) throws IOException {
+        String json = this.isochroneService.getIsochrone(lat, lng, maxTravelTime);
+        GeometryJSON gjson = new GeometryJSON();
+        Reader reader = new StringReader(json);
+        MultiPolygon multiPolygon = gjson.readMultiPolygon(reader);
+
+        Geometry intersection = multiPolygon.intersection(allPoints);
+
+        return List.of();
     }
 
     private List<List<String>> readFromCsv() {

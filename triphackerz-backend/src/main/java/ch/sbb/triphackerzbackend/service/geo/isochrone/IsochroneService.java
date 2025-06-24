@@ -1,4 +1,4 @@
-package ch.sbb.triphackerzbackend.geo.isochrone;
+package ch.sbb.triphackerzbackend.service.geo.isochrone;
 
 import lombok.extern.slf4j.Slf4j;
 //import org.geojson.FeatureCollection;
@@ -27,16 +27,6 @@ public class IsochroneService {
     public IsochroneService(RestClient.Builder restClientBuilder) throws IOException {
         this.restClient = restClientBuilder.baseUrl(BASE_URL).build();
         log.info("IsochroneService created");
-        String json = this.getIsochrone(46.9707131623107, 7.464525109868475, Duration.ofMinutes(60));
-        GeometryJSON gjson = new GeometryJSON();
-        Reader reader = new StringReader(json);
-        MultiPolygon p = gjson.readMultiPolygon(reader);
-        GeometryFactory geometryFactory = JTSFactoryFinder.getGeometryFactory();
-        Coordinate coordinate = new Coordinate(7.464525109868475, 46.9707131623107);
-        Point point = geometryFactory.createPoint(coordinate);
-        boolean isPointIn = p.contains(point);
-//        p.intersection(points);
-        log.info(p.toString());
     }
 
     public String getIsochrone(Double lat, Double lng, Duration maxTravelTime) {
