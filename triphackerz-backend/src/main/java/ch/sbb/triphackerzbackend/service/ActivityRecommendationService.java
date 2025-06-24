@@ -8,4 +8,5 @@ public interface ActivityRecommendationService {
 
     List<ActivityRecommendation> getActivityRecommendations(String activity, List<String> cities, int maxResult);
 
+    List<String> getCitiesForRecommendation(List<String> cities);
 }
