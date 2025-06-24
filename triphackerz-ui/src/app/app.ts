@@ -4,7 +4,7 @@ import moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import {Observable, take} from 'rxjs';
-import {DummyResponse, TripSearchService} from './service/trip-search.service';
+import {ActivityRecommendation, TripSearchService} from './service/trip-search.service';
 import {AsyncPipe, JsonPipe} from '@angular/common';
 import {MatToolbar} from '@angular/material/toolbar';
 import {RouterLink, RouterOutlet} from '@angular/router';
@@ -25,10 +25,10 @@ export class App implements OnInit, AfterViewInit {
   private pin = Leaflet.marker({lat: 0, lng: 0});
   private isocrone!: Leaflet.Layer;
 
-  test$: Observable<DummyResponse> | undefined;
+  test$: Observable<ActivityRecommendation[]> | undefined;
 
   ngOnInit() {
-    this.test$ = this.testService.searchTrip(8.49436, 47.396548, 60, ['hiking', 'swimming']);
+    this.test$ = this.testService.searchTrip(8.63549115943129, 47.69629751508408, 60, ['mountain biking', 'schwimmen']);
   }
 
   ngAfterViewInit() {

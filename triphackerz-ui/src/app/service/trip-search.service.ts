@@ -10,7 +10,7 @@ export class TripSearchService {
 
   constructor() { }
 
-  searchTrip(sourceLongitude: number, sourceLatitude: number, maxTravelTime: number, activities: string[]): Observable<DummyResponse> {
+  searchTrip(sourceLongitude: number, sourceLatitude: number, maxTravelTime: number, activities: string[]): Observable<ActivityRecommendation[]> {
     const options = {
       params:
         new HttpParams().set('sourceLongitude', sourceLongitude.toString())
@@ -19,10 +19,17 @@ export class TripSearchService {
           .set('activities', activities.join(',')),
     }
 
-    return this.http.get<DummyResponse>('/api/trip/search', options);
+    return this.http.get<ActivityRecommendation[]>('/api/trip/search', options);
   }
 }
 
-export interface DummyResponse {
-  message: string;
+export interface Activity {
+  name: string;
+  description: string;
+  city: string;
+}
+
+export interface ActivityRecommendation {
+  activity: Activity;
+  rating: number;
 }

@@ -35,7 +35,7 @@ public class ImageSearchServiceImpl implements ImageSearchService {
                         .queryParam("cx", cx)
                         .queryParam("searchType", "image")
                         .queryParam("imgType", "photo")
-                        .queryParam("imgSize", "medium")
+                        .queryParam("imgSize", "large")
                         .queryParam("q", query)
                         .build())
                 .retrieve().bodyToMono(ImageSearchResult.class).block();
