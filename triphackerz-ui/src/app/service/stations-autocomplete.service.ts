@@ -7,7 +7,6 @@ import {Station} from '../models/station.model';
   providedIn: 'root'
 })
 export class StationsAutocompleteService {
-  private apiUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
   }
@@ -17,6 +16,6 @@ export class StationsAutocompleteService {
     if (name) {
       params = params.set('name', name);
     }
-    return this.http.get(`${this.apiUrl}/api/station/search`, {params}) as Observable<Station[]>;
+    return this.http.get(`/api/station/search`, {params}) as Observable<Station[]>;
   }
 }

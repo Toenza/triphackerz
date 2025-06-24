@@ -1,0 +1,56 @@
+{
+  "tripResponse": [
+    {
+      "activityRecommendation": {
+        "activity": {
+          "name": "Hammam & Spa Oktogon Bern",
+          "description": "A unique Hammam and spa experience in a former church, known for its oriental bathing rituals and relaxing atmosphere.",
+          "city": "Bern",
+          "location": {
+            "latitude": 46.947265,
+            "longitude": 7.433898
+          }
+        },
+        "rating": 5
+      },
+      "image": {
+        "title": "Hammam & Spa Oktogon Bern | Aqua Spa Resorts",
+        "link": "https://www.aqua-spa-resorts.ch/sites/default/files/2020-09/hammam-oktogon-tageseintritt-hammam-x6.jpg",
+        "snippet": "Hammam & Spa Oktogon Bern | Aqua Spa Resorts"
+      }
+    },
+    {
+      "activityRecommendation": {
+        "activity": {
+          "name": "Solbad & Spa Schönbühl",
+          "description": "A modern brine bath and spa offering various wellness treatments, including thermal pools and saunas.",
+          "city": "Schönbühl",
+          "location": {
+            "latitude": 46.906953,
+            "longitude": 7.424458
+          }
+        },
+        "rating": 4
+      },
+      "image": {
+        "title": "About the Solbad & Spa",
+        "link": "https://www.aqua-spa-resorts.ch/sites/default/files/2024-10/solbad-spa-schoenbuehl-natursolebad-becken-innen-sprudel2.jpg",
+        "snippet": "About the Solbad & Spa"
+      }
+    }
+  ],
+  "stationResponse": [
+    {
+      "name": "Bern",
+      "latitude": 46.94809,
+      "longitude": 7.44744,
+      "id": "8507000"
+    },
+    {
+      "name": "Schönbühl",
+      "latitude": 46.90695,
+      "longitude": 7.42446,
+      "id": "8507001"
+    }
+  ]
+}
