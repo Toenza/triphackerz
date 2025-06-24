@@ -1,7 +1,7 @@
 <form class="form">
   <app-input-from-station (stationChanged)="handleStationChange($event)"/>
   <app-max-travel-time (maxTravelTimeChanged)="handleMaxTimeChange($event)" />
-  <app-activity-chips/>
+  <app-activity-chips (chipsChanged)="handleChipsChanged($event)"/>
 
   <button matButton="filled" (click)="search()">Find trip</button>
 </form>

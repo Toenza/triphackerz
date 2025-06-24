@@ -6,34 +6,34 @@ import {MatCardModule} from '@angular/material/card';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-    selector: 'app-results-page',
-    imports: [
-        MapComponent,
-        MatCardModule
-    ],
-    templateUrl: './results-page.html',
-    styleUrl: './results-page.scss'
+  selector: 'app-results-page',
+  imports: [
+    MapComponent,
+    MatCardModule
+  ],
+  templateUrl: './results-page.html',
+  styleUrl: './results-page.scss'
 })
 export class ResultsPage {
-    private searchTripService = inject(TripSearchService);
+  private searchTripService = inject(TripSearchService);
   results: WritableSignal<ActivityRecommendationResponseItem[]> = signal([]);
 
-    constructor(private _activatedRoute: ActivatedRoute) {
-        this._activatedRoute.queryParams.subscribe(
-            params => {
-                console.log('queryParams', params);
-                this.startLocation = {longitude: parseFloat(params['lng']), latitude: parseFloat(params['lat'])};
-        this.searchTripService.searchTrip(params['lng'], params['lat'], 60, ['in einem see oder fluss schwimmen'])
-                    .subscribe(res => {
+  constructor(private _activatedRoute: ActivatedRoute) {
+    this._activatedRoute.queryParams.subscribe(
+      params => {
+        console.log('queryParams', params);
+        this.startLocation = {longitude: parseFloat(params['lng']), latitude: parseFloat(params['lat'])};
+        this.searchTripService.searchTrip(params['lng'], params['lat'], 60, params['activities'])
+          .subscribe(res => {
             this.results.set(res);
             this.destinations = res.map(
               result => result.activityRecommendation.activity.location
             );
           });
-            });
-    }
+      });
+  }
 
-    startLocation: Location | undefined;
-    destinations: Location[] | undefined;
+  startLocation: Location | undefined;
+  destinations: Location[] | undefined;
 
 }
