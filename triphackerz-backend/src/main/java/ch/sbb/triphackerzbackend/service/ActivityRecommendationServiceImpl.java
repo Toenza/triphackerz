@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
 
-import ch.sbb.triphackerzbackend.model.ActivityRecommendation;
-import ch.sbb.triphackerzbackend.model.ActivityRecommendationsResult;
+import ch.sbb.triphackerzbackend.model.recommendation.ActivityRecommendation;
+import ch.sbb.triphackerzbackend.model.recommendation.ActivityRecommendationsResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,8 @@ public class ActivityRecommendationServiceImpl implements ActivityRecommendation
 
     public static final String PROMPT_PATTERN = """
             Du bist ein Experte bei der Suche nach Freizeitaktivitäten in der Schweiz. Du bekommst einen Wunsch für eine Aktivität und eine Liste von Städten. Du gibst anhand dieser Informationen konkrete Vorschläge, wo man diese Aktivität in den vorgegebenen Städten machen kann.
-            Du gibst nur Ergebnisse zurück, die wirklich bekannt sind. Du gibst nur Aktivitäten zurück, die in dieser Stadt verfügbar sind. Wenn du für eine Stadt keine solche Aktivität findest, ignorierst du sie.
+            Du gibst nur Ergebnisse zurück, die wirklich bekannt sind. Du gibst nur Aktivitäten zurück, die in dieser Stadt verfügbar sind. Wenn die Aktivität an einer Adresse, Gebäude oder Lokalität zu finden ist, dann gibst du den Namen davon zurück. Wenn du für eine Stadt keine solche Aktivität findest, ignorierst du sie.
+            Falls möglich, füge die Location mit Latitude und Longitude hinzu. Wenn es nichts gibt oder du dir unsicher bist, nimm die Location der Stadt.
             Die konkreten Aktivitäten bewertest du nach Beliebtheit und Bekanntheit in einem Wert von 1 bis 5.
             
             Aktivität: {activity}

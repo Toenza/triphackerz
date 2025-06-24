@@ -1,4 +1,4 @@
-package ch.sbb.triphackerzbackend.model;
+package ch.sbb.triphackerzbackend.model.recommendation;
 
 import lombok.NonNull;
 
@@ -8,6 +8,7 @@ public record Activity(
         @NonNull
         String description,
         @NonNull
-        String city
+        String city,
+        Location location
 ) {
 }

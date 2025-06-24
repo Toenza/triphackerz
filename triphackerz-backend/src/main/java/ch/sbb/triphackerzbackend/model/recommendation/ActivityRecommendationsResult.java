@@ -1,4 +1,4 @@
-package ch.sbb.triphackerzbackend.model;
+package ch.sbb.triphackerzbackend.model.recommendation;
 
 import java.util.List;
 
