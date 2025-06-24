@@ -3,9 +3,12 @@ package ch.sbb.triphackerzbackend.service.stationsearch;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,6 @@ import ch.sbb.triphackerzbackend.model.Station;
 @Service
 public class StationSearchService {
     private static final String CSV_FILE = "stops.csv";
-    private static final String COMMA_DELIMITER = ",";
 
     private final List<Station> stations;
 
@@ -34,9 +36,19 @@ public class StationSearchService {
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new ClassPathResource(CSV_FILE).getInputStream()))) {
 
-            return reader.lines()
-                    .map(line -> Arrays.asList(line.split(COMMA_DELIMITER)))
-                    .toList();
+            CSVParser csvParser = new CSVParser(reader,
+                    CSVFormat.DEFAULT.builder()
+                            .setQuote('"')
+                            .setIgnoreEmptyLines(true)
+                            .build());
+
+            List<List<String>> records = new ArrayList<>();
+            for (CSVRecord record : csvParser) {
+                List<String> values = new ArrayList<>();
+                record.forEach(values::add);
+                records.add(values);
+            }
+            return records;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -44,8 +56,9 @@ public class StationSearchService {
 
     private List<Station> mapToStations(List<List<String>> records) {
         return records.stream()
-                .filter(record -> record.getFirst().equals("stop_id"))
+                .filter(record -> !record.get(1).equals("stop_name"))
                 .map(record -> new Station(
+                        record.getFirst(), // id
                         record.get(1), // name
                         Double.valueOf(record.get(2)), // latitude
                         Double.valueOf(record.get(3)) // longitude
