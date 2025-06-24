@@ -3,3 +3,10 @@ GET http://localhost:8080//api/recommendation/search
     ?topic=Spassbad mit Wasserrutsche&cities=Murten,Schalunen,Schaffhausen,Basel,Zürich,Bern,Genf, Thun&maxResult=10
 
 ###
+
+
+### GET request to example server
+GET http://localhost:8080//api/recommendation/search
+    ?topic=Fluss zum Baden&cities=Murten,Schalunen,Schaffhausen,Basel,Zürich,Bern,Genf,Thun&maxResult=10
+
+###
