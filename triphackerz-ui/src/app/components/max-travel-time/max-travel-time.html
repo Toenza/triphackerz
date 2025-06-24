@@ -1,4 +1,4 @@
 <mat-form-field appearance="fill" class="form-input">
   <mat-label>Max Travel Time</mat-label>
-  <input matInput [value]="maxTravelTime" type="time" max="03:00" (input)="onSelectionChanged($event)">
+  <input matInput [value]="maxTravelTime" [min]="min" [max]="max" type="time" (input)="onSelectionChanged($event)">
 </mat-form-field>
