@@ -1,4 +1,13 @@
 @use '@angular/material' as mat;
+.title {
+  padding-top: 40px;
+  align-content: center;
+  text-align: center;
+}
+
+.form {
+  padding-top: 40px;
+}
 
 .form-input {
   width:100%;

@@ -1,5 +1,11 @@
 @use '@angular/material' as mat;
 
+.logo {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+}
+
 .content{
   padding: 1rem;
 }
