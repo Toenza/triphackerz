@@ -7,10 +7,10 @@ import {Observable, take} from 'rxjs';
 import {DummyResponse, TripSearchService} from './service/trip-search.service';
 import {AsyncPipe, JsonPipe} from '@angular/common';
 import {MapComponent} from './map/map.component';
-import {Location} from './models/location.model';
 import {MatToolbar} from '@angular/material/toolbar';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {OjpService} from './service/ojp.service';
+import {Station} from './models/station.model';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +20,30 @@ import {OjpService} from './service/ojp.service';
   styleUrl: './app.scss'
 })
 export class App implements OnInit, AfterViewInit {
-  // TODO here we have to set the start location to set the marker on the map
-
-  startLocation: Location = {latitude: 46.949026808315736, longitude: 7.439949741053424}; // default start location
-  // TODO here we have to set all the destinations to set the marker on the map
-  destinations: Location[] = [
-    {latitude: 46.94816653207459, longitude: 7.459474396895817}, // default value
-    {latitude: 46.9429048241674, longitude: 7.443830980779374} // default value
+  startLocation: Station = {
+    latitude: 46.94385138,
+    longitude: 7.40722936,
+    id: '8504108',
+    name: 'Bern Europaplatz'
+  }; // default start location
+  destinations: Station[] = [
+    {
+      latitude: 46.78168483,
+      longitude: 6.64049929,
+      id: '8504200',
+      name: 'Yverdon-les-Bains'
+    }
   ];
+
+  /*
+  ,
+    {
+      latitude: 46.88842395,
+      longitude: 6.55368610,
+      id: '8504288',
+      name: 'Buttes'
+    }
+   */
 
   private testService = inject(TripSearchService);
   private isochroneService = inject(IsochroneService);

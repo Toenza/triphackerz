@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
-import {Location} from '../models/location.model';
-import {OjpRoute, OjpService} from '../service/ojp.service';
-import {Observable} from 'rxjs';
+import {OjpService} from '../service/ojp.service';
+import {take} from 'rxjs';
+import {Station} from '../models/station.model';
+import {LatLng} from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -12,15 +13,9 @@ import {Observable} from 'rxjs';
   styleUrl: './map.component.scss'
 })
 export class MapComponent implements OnInit {
-
   map: any;
-  @Input()
-  startLocation: Location = {latitude: 46.949026808315736, longitude: 7.439949741053424}; // default value
-  @Input()
-  destinations: Location[] = [
-    {latitude: 46.94816653207459, longitude: 7.459474396895817}, // default value
-    {latitude: 46.9429048241674, longitude: 7.443830980779374} // default value
-  ];
+  @Input() startLocation: Station = {} as Station;
+  @Input() destinations: Station[] = [];
 
   constructor(private ojpService: OjpService) {
   }
@@ -51,13 +46,60 @@ export class MapComponent implements OnInit {
     //  L.marker([destination.latitude, destination.longitude]).addTo(this.map);
     //});
     this.destinations.forEach(destination => {
-      console.log('check following destination: ' + destination.latitude + ' and ' + destination.longitude)
-      this.ojpService.getPublicTransportRoutes(this.startLocation, destination).subscribe((route: Observable<OjpRoute>) => {
-        console.log('Route found:', route);
-        L.marker([destination.latitude, destination.longitude]).addTo(this.map);
-      }, (error: any) => {
-        console.error('Error fetching route:', error);
-      });
+      this.ojpService.getPublicTransportRoutes(this.startLocation, destination)
+        .pipe(take(1))
+        .subscribe((response: string) => {
+          console.log('Route found:', response);
+          L.marker([destination.latitude, destination.longitude]).addTo(this.map);
+
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(response, "text/xml");
+          const elements = xmlDoc.getElementsByTagName('JourneyRef');
+
+          const el = elements[0];
+          const journeyRef: string = el.textContent ?? "";
+          console.log('journey ref ', journeyRef);
+          this.ojpService.getPolyline(journeyRef).subscribe((res: string) => {
+            const xmlDocPolyline = parser.parseFromString(res, "text/xml");
+            const elementsLinkProjection = xmlDocPolyline.getElementsByTagName('LinkProjection')[0];
+            const positions = elementsLinkProjection.getElementsByTagName('Position');
+            console.log('elementsLinkProjection', elementsLinkProjection);
+            const el = (Array.from(positions)).map((position: Element) => {
+              const longitude = position.getElementsByTagName('siri:Longitude')[0].textContent;
+              const latitude = position.getElementsByTagName('siri:Latitude')[0].textContent;
+              const lat = parseFloat(latitude || '0');
+              const lng = parseFloat(longitude || '0');
+              return new LatLng(lat, lng);
+            });
+            console.log('el', el);
+            const polyline = L.polyline(el.flat());
+            console.log('polyline', polyline);
+            polyline.addTo(this.map);
+          });
+          /*
+          console.log('route', response);
+          const xmlDoc = parser.parseFromString(response, "text/xml");
+          console.log('xml', xmlDoc);
+          // const trip = xmlDoc.getElementsByTagName;
+          const elements = xmlDoc.getElementsByTagName('GeoPosition');
+          console.log('elements', elements);
+          const el = (Array.from(elements)).map((element: Element) => {
+            const longitude = element.getElementsByTagName('siri:Longitude')[0].textContent;
+            const latitude = element.getElementsByTagName('siri:Latitude')[0].textContent;
+            const lat = parseFloat(latitude || '0');
+            const lng = parseFloat(longitude || '0');
+            return new LatLng(lat, lng);
+          });
+          console.log('el', el);
+          const polyline = L.polyline(el.flat());
+          console.log('polyline', polyline);
+          polyline.addTo(this.map);
+
+           */
+
+        }, (error: any) => {
+          console.error('Error fetching route:', error);
+        });
     });
   }
 
