@@ -39,10 +39,12 @@ public class TripController {
                 .map(Station::getName)
                 .toList();
 
+        List<String> citiesForRecommendation = this.activityRecommendationService.getCitiesForRecommendation(stationNamesForRecommendation);
+
         return Arrays.stream(activities)
                 .parallel()
                 .map(activity -> {
-                    List<ActivityRecommendation> activityRecommendations = this.activityRecommendationService.getActivityRecommendations(activity, stationNamesForRecommendation, 5);
+                    List<ActivityRecommendation> activityRecommendations = this.activityRecommendationService.getActivityRecommendations(activity, citiesForRecommendation, 5);
                     return activityRecommendations.stream()
                             .map(activityRecommendation -> {
                                 ImageSearchResult imageResult = imageService.getImagesForActiviy(activity, activityRecommendation.activity());

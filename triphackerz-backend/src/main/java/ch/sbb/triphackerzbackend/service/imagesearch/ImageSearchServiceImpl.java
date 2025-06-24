@@ -27,7 +27,7 @@ public class ImageSearchServiceImpl implements ImageSearchService {
 
     @Override
     public ImageSearchResult getImagesForActiviy(String topic, Activity activity) {
-        String query = "%s %s %s".formatted(topic, activity.name(), activity.city());
+        String query = "%s %s %s".formatted("", activity.name(), activity.city());
         return this.webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/customsearch/v1")
@@ -35,7 +35,7 @@ public class ImageSearchServiceImpl implements ImageSearchService {
                         .queryParam("cx", cx)
                         .queryParam("searchType", "image")
                         .queryParam("imgType", "photo")
-                        .queryParam("imgSize", "large")
+                        //.queryParam("imgSize", "large")
                         .queryParam("q", query)
                         .build())
                 .retrieve().bodyToMono(ImageSearchResult.class).block();

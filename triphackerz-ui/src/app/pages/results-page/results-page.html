@@ -1,4 +1,6 @@
+@if(startLocation && destinations) {
 <app-map [startLocation]="startLocation" [destinations]="destinations"></app-map>
+}
 <div class="results">
 
 @for (result of results(); track result.activityRecommendation.activity.name) {

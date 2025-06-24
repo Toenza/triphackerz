@@ -7,7 +7,6 @@ import {MatIconModule} from '@angular/material/icon';
 import {ActivityChips} from '../../components/activity-chips/activity-chips';
 import {MaxTravelTime} from '../../components/max-travel-time/max-travel-time';
 import {InputFromStation} from '../../components/input-from-station/input-from-station';
-import {MapComponent} from '../../map/map.component';
 import {Station} from '../../models/station.model';
 import {Router} from '@angular/router';
 
@@ -18,7 +17,7 @@ import {Router} from '@angular/router';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule, ActivityChips, MaxTravelTime, InputFromStation, MapComponent],
+    MatChipsModule, ActivityChips, MaxTravelTime, InputFromStation],
   templateUrl: './filter-page.html',
   styleUrl: './filter-page.scss'
 })

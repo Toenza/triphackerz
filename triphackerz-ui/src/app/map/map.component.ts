@@ -2,7 +2,6 @@ import {Component, inject, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {LatLng, PolylineOptions} from 'leaflet';
 import {Location} from '../models/location.model';
-import {OjpService} from '../service/ojp.service';
 import {TraveltimeTripService} from '../service/traveltime-trip.service';
 
 @Component({
@@ -13,20 +12,10 @@ import {TraveltimeTripService} from '../service/traveltime-trip.service';
   styleUrl: './map.component.scss'
 })
 export class MapComponent implements OnInit {
-
   map: any;
-  @Input()
-  startLocation: Location = {latitude: 46.949026808315736, longitude: 7.439949741053424}; // default value
-  @Input()
-  destinations: Location[] = [
-    {latitude: 46.94816653207459, longitude: 7.459474396895817}, // default value
-    {latitude: 46.9429048241674, longitude: 7.443830980779374} // default value
-  ];
+  @Input() startLocation: Location = {} as Location;
+  @Input() destinations: Location[] = [];
   private travelTimeService = inject(TraveltimeTripService);
-  private ojpService = inject(OjpService);
-
-  constructor() {
-  }
 
   ngOnInit() {
     this.initMap();
@@ -78,12 +67,6 @@ export class MapComponent implements OnInit {
           color: randomColor
         } as PolylineOptions).addTo(this.map);
       });
-      // this.ojpService.getPublicTransportRoutes(this.startLocation, destination).subscribe((route: Observable<OjpRoute>) => {
-      //   console.log('Route found:', route);
-      //   L.marker([destination.latitude, destination.longitude]).addTo(this.map);
-      // }, (error: any) => {
-      //   console.error('Error fetching route:', error);
-      // });
     });
   }
 
