@@ -1,8 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import * as L from 'leaflet';
 import {Location} from '../models/location.model';
 import {OjpRoute, OjpService} from '../service/ojp.service';
 import {Observable} from 'rxjs';
+import {TraveltimeTripService} from '../service/traveltime-trip.service';
+import {LatLng} from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -21,8 +23,10 @@ export class MapComponent implements OnInit {
     {latitude: 46.94816653207459, longitude: 7.459474396895817}, // default value
     {latitude: 46.9429048241674, longitude: 7.443830980779374} // default value
   ];
+  private travelTimeService = inject(TraveltimeTripService);
+  private ojpService = inject(OjpService);
 
-  constructor(private ojpService: OjpService) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -51,14 +55,37 @@ export class MapComponent implements OnInit {
     //  L.marker([destination.latitude, destination.longitude]).addTo(this.map);
     //});
     this.destinations.forEach(destination => {
-      console.log('check following destination: ' + destination.latitude + ' and ' + destination.longitude)
-      this.ojpService.getPublicTransportRoutes(this.startLocation, destination).subscribe((route: Observable<OjpRoute>) => {
-        console.log('Route found:', route);
+      console.log('check following destination: ' + destination.latitude + ' and ' + destination.longitude);
+      this.travelTimeService.getTrip(
+        this.startLocation.latitude,
+        this.startLocation.longitude,
+        destination.latitude,
+        destination.longitude,
+        new Date()
+      ).subscribe(trip => {
         L.marker([destination.latitude, destination.longitude]).addTo(this.map);
-      }, (error: any) => {
-        console.error('Error fetching route:', error);
+        let parts = trip.results[0].locations[0].properties[0].route.parts;
+        const ptParts = parts.filter((part: any) => part.type === 'public_transport');
+        const polyline = ptParts.map((ptPart: any) => {
+          const coords: LatLng[] = ptPart.coords;
+          let pairwise: LatLng[][] = [];
+          for (let i = 0; i < coords.length - 1; i++) {
+            pairwise.push([this.getLatLng(coords, i), this.getLatLng(coords, i+1)]);
+          }
+          return pairwise;
+        });
+        L.polyline(polyline).addTo(this.map);
       });
+      // this.ojpService.getPublicTransportRoutes(this.startLocation, destination).subscribe((route: Observable<OjpRoute>) => {
+      //   console.log('Route found:', route);
+      //   L.marker([destination.latitude, destination.longitude]).addTo(this.map);
+      // }, (error: any) => {
+      //   console.error('Error fetching route:', error);
+      // });
     });
   }
 
+  private getLatLng(coords: LatLng[], i: number) {
+    return new LatLng(coords[i].lat, coords[i].lng);
+  }
 }
