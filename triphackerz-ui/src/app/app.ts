@@ -6,15 +6,26 @@ import * as Leaflet from 'leaflet';
 import {Observable, take} from 'rxjs';
 import {DummyResponse, TripSearchService} from './service/trip-search.service';
 import {AsyncPipe, JsonPipe} from '@angular/common';
+import {MapComponent} from './map/map.component';
+import {Location} from './models/location.model';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, JsonPipe],
+  imports: [AsyncPipe, JsonPipe, MapComponent],
   providers: [IsochroneService, HttpClient],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements OnInit, AfterViewInit {
+  // TODO here we have to set the start location to set the marker on the map
+
+  startLocation: Location = {latitude: 46.949026808315736, longitude: 7.439949741053424}; // default start location
+  // TODO here we have to set all the destinations to set the marker on the map
+  destinations: Location[] = [
+    {latitude: 46.94816653207459, longitude: 7.459474396895817}, // default value
+    {latitude: 46.9429048241674, longitude: 7.443830980779374} // default value
+  ];
+
   private testService = inject(TripSearchService);
   private isochroneService = inject(IsochroneService);
   private map!: Leaflet.Map;
