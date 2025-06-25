@@ -1,5 +1,5 @@
 <mat-form-field class="form-input">
-  <mat-label>Prefered activities</mat-label>
+  <mat-label>Preferred Activities</mat-label>
   <mat-chip-grid #chipGrid aria-label="Enter activity">
     @for (activity of recommendedActivities(); track activity) {
       <mat-chip-row
@@ -12,7 +12,7 @@
       </mat-chip-row>
     }
     <input #activityInput
-      placeholder="New activity..."
+      placeholder="New Activity..."
       [matChipInputFor]="chipGrid"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       [matChipInputAddOnBlur]="addOnBlur"

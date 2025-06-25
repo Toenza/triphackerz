@@ -24,7 +24,7 @@ import {Router} from '@angular/router';
 
 export class FilterPage {
   fromInput: Station = {} as Station;
-  maxTravelTimeInput: number = 0;
+  maxTravelTimeInput: number = 60;
   activities: string[] = [];
   readonly route = inject(Router);
 
