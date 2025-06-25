@@ -9,11 +9,67 @@
   margin-top: -64px;
 }
 
+.page-wrapper {
+  width: 100%;
+  height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column; // Change to column layout
+  align-items: center; // Center items horizontally
+  padding: 0; // Remove any padding to ensure the map starts directly after the header
+}
+
+.map-background {
+  width: 100%; // Full width to extend across the viewport
+  background-color: rgb(9, 130, 135); // Set the background color to blue
+  display: flex; // Use flex to center the map
+  justify-content: center; // Center the map horizontally
+}
+
+.map {
+  width: 70%; // Set width to 70% for the actual map content
+  border-radius: 8px; // Optional: Add rounded corners for aesthetics
+  padding: 10px; // Optional: Add padding inside the container
+}
+
 .results {
+  padding-top: 30px;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 0;
+}
+
+.map-container {
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: rgb(9, 130, 135);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 15%;
+  background-color: white;
+  color: #333333;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
 }
 
 mat-card-title {
@@ -21,13 +77,15 @@ mat-card-title {
 }
 
 mat-card {
-  padding:0;
+  padding: 0;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 mat-card-content {
-  padding:0;
+  padding: 0;
+
   p {
-    padding:0 16px;
+    padding: 0 16px;
   }
 }
 
