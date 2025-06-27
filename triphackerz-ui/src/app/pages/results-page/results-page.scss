@@ -34,14 +34,17 @@
   padding: 10px; // Optional: Add padding inside the container
 }
 
+
 .results {
   padding-top: 30px;
   width: 70%;
-  margin-left: 15%;
-  margin-right: 15%;
+  margin: 0 15%;
+  align-self: start;
   display: flex;
-  flex-direction: column;
   gap: 16px;
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .map-container {
@@ -93,12 +96,21 @@ mat-card-content {
   width: 100%;
   margin: 0;
   padding: 0;
+
+  @media only screen and (max-width: 768px) {
+    max-width: 100%;
+  }
+
+  @media only screen and (min-width: 768px) {
+    max-width: 50%;
+  }
+
+  @media only screen and (min-width: 992px) {
+    max-width: 33%;
+  }
 }
 
 .activity-recommendation {
-  //display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   overflow: hidden;
 
   .image {
