@@ -2,12 +2,14 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import moment from 'moment';
+import {APP_CONFIG} from '../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IsochroneService {
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
+  private readonly appConfig = inject(APP_CONFIG);
 
   constructor() { }
 
@@ -36,8 +38,8 @@ export class IsochroneService {
     }, {
       headers: new HttpHeaders({
         'Accept': 'application/geo+json',
-        'X-Application-Id': 'REPLACE-ME',
-        'X-Api-Key': 'REPLACE-ME'
+        'X-Application-Id': this.appConfig.traveltime.appId,
+        'X-Api-Key': this.appConfig.traveltime.apiKey
         })
     });
   }
