@@ -1,27 +1,23 @@
-import {AfterViewInit, Component, inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, inject} from '@angular/core';
 import {IsochroneService} from './service/isochrone.service';
 import moment from 'moment';
 import {HttpClient} from '@angular/common/http';
 import * as Leaflet from 'leaflet';
 import {take} from 'rxjs';
-import {MatToolbar} from '@angular/material/toolbar';
-import {RouterLink, RouterOutlet} from '@angular/router';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [MatToolbar, RouterLink, RouterOutlet],
+  imports: [RouterOutlet],
   providers: [IsochroneService, HttpClient],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit, AfterViewInit {
-  private isochroneService = inject(IsochroneService);
+export class App implements AfterViewInit {
+  private readonly isochroneService = inject(IsochroneService);
   private map!: Leaflet.Map;
   private pin = Leaflet.marker({lat: 0, lng: 0});
   private isocrone!: Leaflet.Layer;
-
-  ngOnInit() {
-  }
 
   ngAfterViewInit() {
     this.initMap();
